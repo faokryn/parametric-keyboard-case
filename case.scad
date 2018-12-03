@@ -2,7 +2,8 @@ $fn =10;
 
 tol = 0.25;         // tolerance to fit the plate into the case
 sh = 10;            // height of clearance of the switch (below plate)
-ma = 5;            // angle of the main plate
+xa = 5;             // angle of the main plate over the x-axis
+ya = 5;             // angle of the main plate over the y-axis
 pt = 1.5;           // thickness of the plate
 wt = pt * 2;        // thickness of the case wall
 
@@ -14,8 +15,8 @@ module mainplate() {
 }
 
 module flatcase() {
-    translate([0,sin(ma)*h,wt])
-    rotate([ma,0,0])
+    translate([sin(ya)*h,sin(xa)*h,wt])
+    rotate([xa,-ya,0])
     linear_extrude(h)
     minkowski() {
         mainplate();
@@ -24,8 +25,8 @@ module flatcase() {
 }
 
 module caseshell() {
-    translate([0,sin(ma)*h,wt])
-    rotate([ma,0,0])
+    translate([sin(ya)*h,sin(xa)*h,wt])
+    rotate([xa,-ya,0])
     linear_extrude(h)
     offset(-lt)
     mainplate();
@@ -36,7 +37,7 @@ difference() {
     hull() {
         flatcase();
 
-        linear_extrude(0.001)
+        linear_extrude(0.0001)
         projection()
         flatcase();
     }
@@ -45,15 +46,15 @@ difference() {
         caseshell();
 
         translate([0,0,wt])
-        linear_extrude(0.01)
+        linear_extrude(0.0001)
         projection()
         caseshell();
     }
 
-    translate([0,sin(ma)*h,wt])
-    rotate([ma,0,0])
+    translate([sin(ya)*h,sin(xa)*h,wt])
+    rotate([xa,-ya,0])
     translate([0,0,h-pt-tol])
-    linear_extrude(pt+tol+1)
+    linear_extrude(pt+tol+0.0001)
     offset(tol)
     mainplate();
 }

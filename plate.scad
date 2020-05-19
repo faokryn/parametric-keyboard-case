@@ -7,45 +7,39 @@
     date: 2020-05-19
 */
 
+// LAYOUT
+
 sample_layout = [
-    [1, 1, 1, 1],
     [1, 1, 1, 1],
     [1, 1, 1, 1]
 ];
 
 layout = sample_layout;
 
-u = 19.05;
-s = 5.05;
-w = max([for (x = layout) [for(n=x) 1]*x]) * u + s;
-d = len(layout) * u + s;
-h = 1.5;
-r = 3;
+// INDEPENDENT VARIABLES
 
+r = 3;      // reinforcement thickness
+z = 0.02;   // small value to help stop z-fighting
+
+// CHERRY-DEFINED VARIABLES (not recommended to change)
+
+u = 19.05;  // single key "unit"
+s = 5.05;   // edge-to-edge case spacing
+p = 1.5;    // plate thickness
+
+// DEPENDENT VARIABLES (not recommended to change)
+
+w = max([for (x = layout) [for(n=x) 1]*x]) * u + s; // plate width
+d = len(layout) * u + s;                            // plate depth
 
 difference() {
-    color("blue") cube([w, d, h]);
+    color("blue") cube([w, d, p + r]);
     for (i = [0:len(layout)-1]) {
         for (j = [0:len(layout[i])-1]) {
-            translate([s + j*u, s + i*u, -0.01])
-                cube([u-s, u-s, h+0.02]);
+            translate([s + j*u, s + i*u, -z/2])
+                cube([u - s, u - s, p + z]);
+            translate([3/4*s + j*u, 3/4*s + i*u, p])
+                cube([u - s/2, u - s/2, r + z]);
         }
     }
 }
-
-translate([0, 0, h])
-    cube([3/4*s, d, r]);
-translate([0, 0, h])
-    cube([w, 3/4*s, r]);
-for (i = [1:len(layout)-1]) {
-    translate([0, u*i + s/4, h])
-        cube([w, s/2, r]);
-    for (j = [1:len(layout[i])-1]) {
-        translate([j*u + s/4, 0, h])
-            cube([s/2, d, r]);
-    }
-}
-translate([w - 3/4*s, 0, h])
-    cube([3/4*s, d, r]);
-translate([0, d - 3/4*s, h])
-    cube([w, 3/4*s, r]);

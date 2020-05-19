@@ -32,6 +32,16 @@ p = 1.5;    // plate thickness
 w = max([for (x = layout) [for(n=x) 1]*x]) * u + s; // plate width
 d = len(layout) * u + s;                            // plate depth
 
+//n = [1, 2, 3, 4];
+//function sublist(list, to) = [ for (i=[0:to]) list[i] ];
+//function sumsublist(list, to) = [ for (y=sublist(list, to)) 1]*sublist(list, to);
+//function sumsublist(list, to) = let (l = sublist(list, to)) [ for (y=l) 1]*l;
+//function sumsublist(list, to) = let (sl = [ for (i=[0:to]) list[i] ]) [ for (y=sl) 1]*sl;
+//function sumallsublists(list) = [ for (i=[0:len(list)-1]) sumsublist(list,i) ];
+//function sumallsublists(list) = [ for (i=[0:len(list)-1]) let (sl = [ for (j=[0:i]) list[j] ]) [ for (y=sl) 1]*sl ];
+//c = [for (x = layout) sumallsublists(x)];
+c = [for (x = layout) [ for (i=[0:len(x)-1]) let (sl = [ for (j=[0:i]) x[j] ]) [ for (y=sl) 1]*sl ]];
+
 difference() {
     color("blue") cube([w, d, p + r]);
     for (i = [0:len(layout)-1]) {

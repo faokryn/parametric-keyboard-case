@@ -1,8 +1,8 @@
 /*
     plate.scad
-    
+
     Generate a 3D model for a keyboard case
-    
+
     author: Colin O'Neill <colin@faokryn.com>
     date: 2020-05-19
 */
@@ -10,8 +10,11 @@
 // LAYOUT
 
 sample_layout = [
-    [1, 1, 1, 1],
-    [1, 1, 1, 1]
+    [1.5, 1, 1, 1, 1, 1, 1],
+    [1.5, 1, 1, 1, 1, 1, 1],
+    [1.5, 1, 1, 1, 1, 1, 1],
+    [1.5, 1, 1, 1, 1, 1, 1],
+    [1.5, 1.5, 1.25, 2.75]
 ];
 
 layout = sample_layout;
@@ -29,27 +32,24 @@ p = 1.5;    // plate thickness
 
 // DEPENDENT VARIABLES (not recommended to change)
 
-w = max([for (x = layout) [for(n=x) 1]*x]) * u + s; // plate width
-d = len(layout) * u + s;                            // plate depth
-
-//n = [1, 2, 3, 4];
-//function sublist(list, to) = [ for (i=[0:to]) list[i] ];
-//function sumsublist(list, to) = [ for (y=sublist(list, to)) 1]*sublist(list, to);
-//function sumsublist(list, to) = let (l = sublist(list, to)) [ for (y=l) 1]*l;
-//function sumsublist(list, to) = let (sl = [ for (i=[0:to]) list[i] ]) [ for (y=sl) 1]*sl;
-//function sumallsublists(list) = [ for (i=[0:len(list)-1]) sumsublist(list,i) ];
-//function sumallsublists(list) = [ for (i=[0:len(list)-1]) let (sl = [ for (j=[0:i]) list[j] ]) [ for (y=sl) 1]*sl ];
-//c = [for (x = layout) sumallsublists(x)];
-c = [for (x = layout) [ for (i=[0:len(x)-1]) let (sl = [ for (j=[0:i]) x[j] ]) [ for (y=sl) 1]*sl ]];
+c = [
+    for (x = layout) [
+        for (i=[0:len(x)-1])
+            let (sl = [ for (j=[0:i]) x[j] ])
+            [ for (y=sl) 1]*sl
+    ]
+];
+w = max([for(x=c) x[len(x)-1]]) * u + s;    // plate width
+d = len(layout) * u + s;                    // plate depth
 
 difference() {
-    color("blue") cube([w, d, p + r]);
-    for (i = [0:len(layout)-1]) {
-        for (j = [0:len(layout[i])-1]) {
-            translate([s + j*u, s + i*u, -z/2])
-                cube([u - s, u - s, p + z]);
-            translate([3/4*s + j*u, 3/4*s + i*u, p])
-                cube([u - s/2, u - s/2, r + z]);
+    cube([w, d, p + r]);
+    for (row = [0:len(layout)-1]) {
+        for (key = [0:len(layout[row])-1]) {
+            translate([(c[row][key] - layout[row][key]/2 - 1/2)*u, row*u, 0]) {
+                translate([3/4*s, 3/4*s, p]) cube([u - s/2, u - s/2, r + z]);
+                translate([s, s, -z/2]) cube([u - s, u - s, p + z]);
+            }
         }
     }
 }

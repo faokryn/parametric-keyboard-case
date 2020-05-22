@@ -30,6 +30,11 @@ u = 19.05;  // single key "unit"
 s = 5.05;   // edge-to-edge case spacing
 p = 1.5;    // plate thickness
 
+e = 3.3;
+f = 14.2;
+g = 0.55;
+h = 0.75;
+
 // DEPENDENT VARIABLES (not recommended to change)
 
 c = [
@@ -47,8 +52,16 @@ difference() {
     for (row = [0:len(layout)-1]) {
         for (key = [0:len(layout[row])-1]) {
             translate([(c[row][key] - layout[row][key]/2 - 1/2)*u, row*u, 0]) {
-                translate([3/4*s, 3/4*s, p]) cube([u - s/2, u - s/2, r + z]);
                 translate([s, s, -z/2]) cube([u - s, u - s, p + z]);
+                if (layout[row][key] < 2)
+                    translate([3/4*s, 3/4*s, p])
+                        cube([u - s/2, u - s/2, r + z]);
+                else {
+                    translate([s - 2*e,s-h,-z/2]) cube([e, f, p + z]);
+                    translate([u+e,s-g,-z/2]) cube([e, f, p + z]);
+                    translate([3/4*s - e*2, 3/4*s - g, p])
+                        cube([u - s/2 + e*4, u + g - s/2, r + z]);
+                }
             }
         }
     }

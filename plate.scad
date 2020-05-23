@@ -21,46 +21,61 @@ layout = sample_layout;
 
 // INDEPENDENT VARIABLES
 
-r = 3;      // reinforcement thickness
-z = 0.02;   // small value to help stop z-fighting
+reinforcement = 3;      // reinforcement thickness
+z = 0.02;               // small value to help stop z-fighting
 
 // CHERRY-DEFINED VARIABLES (not recommended to change)
 
-u = 19.05;  // single key "unit"
-s = 5.05;   // edge-to-edge case spacing
-p = 1.5;    // plate thickness
+u = 19.05;              // single key "unit"
+gap = 5.05;             // edge-to-edge case spacing
+plate = 1.5;            // plate thickness
 
-e = 3.3;
-f = 14.2;
-g = 0.55;
-h = 0.75;
+stab_width = 3.3;       // stabilizer hole width
+stab_height = 14.2;     // stabilizer hole height
+stab_offset = 0.55;     // stabilizer vertical offset from key hole
 
 // DEPENDENT VARIABLES (not recommended to change)
 
-c = [
-    for (x = layout) [
-        for (i=[0:len(x)-1])
-            let (sl = [ for (j=[0:i]) x[j] ])
-            [ for (y=sl) 1]*sl
+// 2D array the same dimensions as layout containing the cumulative distance
+// (in Cherry "units") from the edge of the board instead of the size of the key
+distance = [
+    for (row = layout) [
+        for (i=[0:len(row)-1])
+            let (sub_array = [ for (j=[0:i]) row[j] ])
+            [ for (x=sub_array) 1]*sub_array
     ]
 ];
-w = max([for(x=c) x[len(x)-1]]) * u + s;    // plate width
-d = len(layout) * u + s;                    // plate depth
+width = max([for(row = distance) row[len(row) - 1]]) * u + gap; // plate width
+depth = len(layout) * u + gap;                                  // plate depth
 
 difference() {
-    cube([w, d, p + r]);
+    cube([width, depth, plate + reinforcement]);
     for (row = [0:len(layout)-1]) {
         for (key = [0:len(layout[row])-1]) {
-            translate([(c[row][key] - layout[row][key]/2 - 1/2)*u, row*u, 0]) {
-                translate([s, s, -z/2]) cube([u - s, u - s, p + z]);
+            translate([
+                (distance[row][key] - layout[row][key]/2 - 1/2)*u,
+                row*u,
+                0
+            ]) {
+                translate([gap, gap, -z/2]) cube([u - gap, u - gap, plate + z]);
                 if (layout[row][key] < 2)
-                    translate([3/4*s, 3/4*s, p])
-                        cube([u - s/2, u - s/2, r + z]);
+                    translate([3/4*gap, 3/4*gap, plate])
+                        cube([u - gap/2, u - gap/2, reinforcement + z]);
                 else {
-                    translate([s - 2*e,s-h,-z/2]) cube([e, f, p + z]);
-                    translate([u+e,s-g,-z/2]) cube([e, f, p + z]);
-                    translate([3/4*s - e*2, 3/4*s - g, p])
-                        cube([u - s/2 + e*4, u + g - s/2, r + z]);
+                    translate([gap - 2*stab_width, gap - stab_offset, -z/2])
+                        cube([stab_width, stab_height, plate + z]);
+                    translate([stab_width + u, gap - stab_offset, -z/2])
+                        cube([stab_width, stab_height, plate + z]);
+                    translate([
+                        3/4*gap - 2*stab_width,
+                        3/4*gap - stab_offset,
+                        plate
+                    ])
+                        cube([
+                            4*stab_width + u - gap/2,
+                            u + stab_offset - gap/2,
+                            reinforcement + z
+                        ]);
                 }
             }
         }

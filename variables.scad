@@ -13,6 +13,8 @@ layout = sample_layout;
 // INDEPENDENT VARIABLES
 
 reinforcement = 3;      // reinforcement thickness
+wall = 3;             // thickness of the wall of the case
+tol = 0.25;             // tolerance between the plate and the case
 z = 0.02;               // small value to help stop z-fighting
 
 // CHERRY-DEFINED VARIABLES (not recommended to change)
@@ -20,6 +22,7 @@ z = 0.02;               // small value to help stop z-fighting
 u = 19.05;              // single key "unit"
 gap = 5.05;             // edge-to-edge case spacing
 plate = 1.5;            // plate thickness
+switch = 10;            // clearance height of the switch
 
 stab_width = 3.3;       // stabilizer hole width
 stab_height = 14.2;     // stabilizer hole height

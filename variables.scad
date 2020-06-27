@@ -1,3 +1,5 @@
+$fn = 50;
+
 // LAYOUT
 
 sample_layout = [
@@ -13,8 +15,10 @@ layout = sample_layout;
 // INDEPENDENT VARIABLES
 
 reinforcement = 3;      // reinforcement thickness
-wall = 3;             // thickness of the wall of the case
+wall = 3;               // thickness of the wall of the case
 tol = 0.25;             // tolerance between the plate and the case
+xa = 5;                 // tilt angle over the x-axis
+ya = 0;                 // tilt angle over the y-axis
 z = 0.02;               // small value to help stop z-fighting
 
 // CHERRY-DEFINED VARIABLES (not recommended to change)

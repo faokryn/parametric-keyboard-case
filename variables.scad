@@ -15,8 +15,9 @@ layout = sample_layout;
 // INDEPENDENT VARIABLES
 
 reinforcement = 3;      // reinforcement thickness
-wall = 3;               // thickness of the wall of the case
-tol = 0.25;             // tolerance between the plate and the case
+wall = 2;               // thickness of the wall of the case
+x_tol = 0.2;            // tolerance between the plate & the case on the x-axis
+y_tol = 0.05;           // tolerance between the plate & the case on the y-axis
 xa = 5;                 // tilt angle over the x-axis
 ya = 0;                 // tilt angle over the y-axis
 z = 0.02;               // small value to help stop z-fighting

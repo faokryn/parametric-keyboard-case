@@ -16,10 +16,16 @@ layout = sample_layout;
 
 reinforcement = 3;      // reinforcement thickness
 wall = 2;               // thickness of the wall of the case
+
 x_tol = 0.2;            // tolerance between the plate & the case on the x-axis
 y_tol = 0.05;           // tolerance between the plate & the case on the y-axis
+
 xa = 5;                 // tilt angle over the x-axis
 ya = 0;                 // tilt angle over the y-axis
+
+cant_width = 5;         // width of the cantilevers
+cant_gap = 0.5;         // gap between the cantilevers and the rest of the case
+
 z = 0.02;               // small value to help stop z-fighting
 
 // CHERRY-DEFINED VARIABLES (not recommended to change)

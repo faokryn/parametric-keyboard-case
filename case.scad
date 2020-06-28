@@ -16,17 +16,62 @@ module cavity() {
         cube([width + x_tol - gap, depth + y_tol - gap, switch]);
 }
 
+module cantilever() {
+    hull() {
+        translate([wall/2, 0, switch + plate]) cube([wall/2, cant_width, z]);
+        cube([wall, cant_width, z]);
+    }
+    translate([wall, cant_width, switch + plate]) rotate([90,0,0])
+        rotate_extrude(angle=180) square([wall/2, cant_width]);
+}
+
 difference() {
     hull() {
         body();
         linear_extrude(z) projection() body();
     }
 
+    // plate
     rotate([xa, -ya, 0]) translate([wall, wall, wall + switch - gap/2])
         cube([width + x_tol, depth + y_tol, plate + gap/2 + z]);
 
+    // cavity
     hull() {
         cavity();
         translate([0, 0, wall]) linear_extrude(z)  projection() cavity();
     }
+
+    // cantilever gaps
+    rotate([xa, -ya, 0]) {
+        translate([width*cos(ya) - width - z/2, wall + gap/2, wall])
+            cube([wall + gap/2 + width - width*cos(ya) + z, cant_width + 2*cant_gap, wall + switch + plate]);
+
+        translate([width + wall + x_tol - gap/2 - z/2, wall + gap/2, wall])
+            cube([wall + gap/2 + z, cant_width + 2*cant_gap, wall + switch + plate]);
+
+        translate([width*cos(ya) - width - z/2, depth + wall + y_tol - gap/2 - cant_width - 2*cant_gap, wall])
+            cube([wall + gap/2 + width - width*cos(ya) + z, cant_width + 2*cant_gap, wall + switch + plate]);
+
+        translate([width + wall + x_tol - gap/2 - z/2, depth + wall + y_tol - gap/2 - cant_width - 2*cant_gap, wall])
+            cube([wall + gap/2 + z, cant_width + 2*cant_gap, wall + switch + plate]);
+    }
+}
+
+rotate([xa, -ya, 0]) {
+    translate([0, wall + gap/2 + cant_gap, wall]) cantilever();
+    translate([
+        0,
+        depth + y_tol + wall - gap/2 - cant_width - cant_gap,
+        wall
+    ]) cantilever();
+    mirror([1, 0, 0]) translate([
+        -(width + wall*2 + x_tol),
+        wall + gap/2 + cant_gap,
+        wall
+    ]) cantilever();
+    mirror([1, 0, 0]) translate([
+        -(width + wall*2 + x_tol),
+        depth + y_tol + wall - gap/2 - cant_width - cant_gap,
+        wall
+    ]) cantilever();
 }

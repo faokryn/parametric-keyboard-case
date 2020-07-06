@@ -17,12 +17,13 @@ module cavity() {
 }
 
 module cantilever() {
-    hull() {
-        translate([wall/2, 0, switch + plate]) cube([wall/2, cant_width, z]);
-        cube([wall, cant_width, z]);
-    }
-    translate([wall, cant_width, switch + plate]) rotate([90,0,0])
-        rotate_extrude(angle=180) square([wall/2, cant_width]);
+    translate([wall - cant_thickness, 0, 0])
+        cube([cant_thickness, cant_width, plate + switch + cant_tol]);
+    translate([
+        2*wall - cant_thickness,
+        cant_width,
+        switch + plate + cant_tol
+    ]) rotate([90,0,0]) rotate_extrude(angle=180) square([wall, cant_width]);
 }
 
 difference() {

@@ -20,11 +20,13 @@ wall = 2;               // thickness of the wall of the case
 x_tol = 0.2;            // tolerance between the plate & the case on the x-axis
 y_tol = 0.05;           // tolerance between the plate & the case on the y-axis
 
-xa = 5;                 // tilt angle over the x-axis
+xa = 0;                 // tilt angle over the x-axis
 ya = 0;                 // tilt angle over the y-axis
 
-cant_width = 5;         // width of the cantilevers
+cant_width = 10;        // width of the cantilevers
 cant_gap = 0.5;         // gap between the cantilevers and the rest of the case
+cant_thickness = 1;     // thickness of the cantilevers' stems
+cant_tol = 0.5;         // tolerance for the cantilevers' heights
 
 z = 0.02;               // small value to help stop z-fighting
 

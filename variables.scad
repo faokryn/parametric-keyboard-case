@@ -2,17 +2,12 @@ $fn = 50;
 
 // LAYOUT
 
-/* sample_layout = [
+sample_layout = [
     [1.5, 1, 1, 1, 1, 1, 1],
     [1.5, 1, 1, 1, 1, 1, 1],
     [1.5, 1, 1, 1, 1, 1, 1],
     [1.5, 1, 1, 1, 1, 1, 1],
     [1.5, 1.5, 1.25, 2.75]
-]; */
-
-sample_layout = [
-    [1,1,1],
-    [1,1,1]
 ];
 
 layout = sample_layout;
@@ -25,14 +20,14 @@ wall = 2;               // thickness of the wall of the case
 x_tol = 0.2;            // tolerance between the plate & the case on the x-axis
 y_tol = 0.05;           // tolerance between the plate & the case on the y-axis
 
-xa = 0;                 // tilt angle over the x-axis
+xa = 5;                 // tilt angle over the x-axis
 ya = 0;                 // tilt angle over the y-axis
 
 cant_width = 10;        // width of the cantilevers
 cant_gap = 0.5;         // gap between the cantilevers and the rest of the case
 cant_thickness = 1;     // thickness of the cantilevers' stems
-cant_tol = 1;          // tolerance for the cantilevers' heights
-cant_overhang = 1;
+cant_tol = 0.5;          // tolerance for the cantilevers' heights
+cant_overhang = 2;
 
 z = 0.02;               // small value to help stop z-fighting
 

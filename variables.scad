@@ -23,11 +23,10 @@ y_tol = 0.05;           // tolerance between the plate & the case on the y-axis
 xa = 5;                 // tilt angle over the x-axis
 ya = 0;                 // tilt angle over the y-axis
 
-cant_width = 10;        // width of the cantilevers
-cant_gap = 0.5;         // gap between the cantilevers and the rest of the case
-cant_thickness = 1;     // thickness of the cantilevers' stems
-cant_tol = 0.5;          // tolerance for the cantilevers' heights
-cant_overhang = 2;
+screwshaft_diameter = 3;
+screwhead_diameter = 5;
+screwinsert_diameter = 3;
+screwinsert_length = 5;
 
 z = 0.02;               // small value to help stop z-fighting
 
@@ -55,3 +54,14 @@ distance = [
 ];
 width = max([for(row = distance) row[len(row) - 1]]) * u + gap; // plate width
 depth = len(layout) * u + gap;                                  // plate depth
+
+// UTILITY MODULES
+
+module project_extrude() {
+    for (i = [0 : 1 : $children - 1]) {
+        hull() {
+            children(i);
+            linear_extrude(z) projection() children(i);
+        }
+    }
+}

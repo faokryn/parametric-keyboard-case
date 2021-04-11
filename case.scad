@@ -18,10 +18,7 @@ module cavity() {
 
 // case body
 difference() {
-    hull() {
-        body();
-        linear_extrude(z) projection() body();
-    }
+    project_extrude() body();
 
     // plate
     rotate([xa, -ya, 0]) translate([wall, wall, wall + switch - reinforcement])
@@ -41,10 +38,9 @@ for (x = [
     [width - wall - screwhead_diameter/2, wall + screwhead_diameter/2]
 ]) {
     difference() {
-        project_extrude() {
+        project_extrude()
             rotate([xa, -ya, 0]) translate([wall + x[0], wall + x[1], switch - reinforcement - screwinsert_length])
                 cylinder(screwinsert_length + wall, d = screwinsert_diameter + 2*wall);
-        }
 
         rotate([xa, -ya, 0]) translate([wall + x[0], wall + x[1], wall + switch - reinforcement - screwinsert_length])
                     cylinder(screwinsert_length + z, d = screwinsert_diameter); 

@@ -45,9 +45,10 @@ module plate() {
 
         // screw holes
         for (x = [
-            [wall + screwhead_diameter/2, wall + screwhead_diameter/2],
-            [wall + screwhead_diameter/2, depth - wall - screwhead_diameter/2],
-            [width - wall - screwhead_diameter/2, depth - wall - screwhead_diameter/2]
+            [z + screwhead_diameter/2, z + screwhead_diameter/2],
+            [z + screwhead_diameter/2, depth - z - screwhead_diameter/2],
+            [width - z - screwhead_diameter/2, depth - z - screwhead_diameter/2],
+            [width - z - screwhead_diameter/2, z + screwhead_diameter/2]
         ]) {
             translate([x[0], x[1], 0]) {
                 cylinder(d = screwshaft_diameter, plate + reinforcement);

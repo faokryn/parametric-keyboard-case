@@ -33,9 +33,10 @@ difference() {
 
 // screw insert posts
 for (x = [
-    [wall + screwhead_diameter/2, wall + screwhead_diameter/2],
-    [wall + screwhead_diameter/2, depth - wall - screwhead_diameter/2],
-    [width - wall - screwhead_diameter/2, wall + screwhead_diameter/2]
+    [screwhead_diameter/2, screwhead_diameter/2],
+    [screwhead_diameter/2, depth - screwhead_diameter/2],
+    [width - screwhead_diameter/2, screwhead_diameter/2],
+    [width - screwhead_diameter/2, depth - screwhead_diameter/2]
 ]) {
     difference() {
         project_extrude()

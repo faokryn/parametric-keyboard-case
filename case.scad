@@ -71,7 +71,17 @@ difference() {
 
 // usb shelf
 translate([
-    width + gap- usb_hole_width - screwhead_diameter - 2*wall -2*hole_spacing - trs_counterbore_dia,
+    width + gap- usb_hole_width - screwhead_diameter - 2*wall -2*hole_spacing - trs_counterbore_dia, 
     backwall_offset + backwall_depth - usb_shelf_depth,
     0
 ]) cube([usb_hole_width, usb_shelf_depth, (trs_counterbore_dia - usb_hole_height)/2 + 2*wall ]);
+
+// microcontroller guide
+translate([(width-mc_width)/2, backwall_offset - mc_depth - wall, 0]) {
+    cube([wall, mc_guide_length + wall, mc_guide_height + wall]);
+    cube([mc_guide_length + wall, wall, mc_guide_height + wall]);
+    translate([mc_width + wall, 0, 0]) cube([wall, mc_guide_length + wall, mc_guide_height + wall]);
+    translate([mc_width + wall - mc_guide_length, 0, 0]) cube([mc_guide_length + wall, wall, mc_guide_height + wall]);
+    translate([0, mc_depth - wall, 0]) cube([wall, mc_guide_length + wall, mc_guide_height + wall]);
+    translate([mc_width + wall, mc_depth - wall, 0]) cube([wall, mc_guide_length + wall, mc_guide_height + wall]);
+}

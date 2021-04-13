@@ -38,6 +38,11 @@ usb_shelf_depth = 10;
 
 hole_spacing = 5;
 
+mc_width = 31;
+mc_depth = 18;
+mc_guide_height = 6;
+mc_guide_length = 4;
+
 z = 0.02;               // small value to help stop z-fighting
 
 // CHERRY-DEFINED VARIABLES (not recommended to change)

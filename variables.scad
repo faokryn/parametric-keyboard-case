@@ -28,6 +28,16 @@ screwhead_diameter = 5;
 screwinsert_diameter = 3;
 screwinsert_length = 5;
 
+trs_hole_dia = 8.5;
+trs_counterbore_dia = 11;
+trs_counterbore_depth = 2;
+
+usb_hole_width = 8;
+usb_hole_height = 4.5;
+usb_shelf_depth = 5;
+
+hole_spacing = 5;
+
 z = 0.02;               // small value to help stop z-fighting
 
 // CHERRY-DEFINED VARIABLES (not recommended to change)

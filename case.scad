@@ -54,24 +54,24 @@ difference() {
     // trs hole
     translate([
         width + gap - trs_counterbore_dia - screwinsert_diameter/2 - wall - hole_spacing,
-        depth  - 2*wall/3 - 2*y_tol,
+        backwall_offset - z/2,
         trs_counterbore_dia/2 + 2*wall
-    ]) rotate([270, 0, 0]) {
-        cylinder(1.5*wall + gap/2 + y_tol, d = trs_hole_dia);
-        cylinder(trs_counterbore_depth, d = trs_counterbore_dia);
+    ]) rotate([270, 0, 0]) { 
+        cylinder(backwall_depth + z, d = trs_hole_dia);
+        cylinder(trs_counterbore_depth + z, d = trs_counterbore_dia);
     }
 
     // usb hole
     translate([
-        width + gap- usb_hole_width - screwhead_diameter - 2*wall -2*hole_spacing - trs_counterbore_dia,
-        depth + wall/2 - gap/2,
-        trs_counterbore_dia/2 + 2*wall - usb_hole_height/2
-    ]) cube([usb_hole_width, wall + gap/2 + y_tol + wall/2, usb_hole_height]);
+        width + gap - usb_hole_width - screwhead_diameter - 2*wall - 2*hole_spacing - trs_counterbore_dia,
+        backwall_offset,
+        (trs_counterbore_dia - usb_hole_height)/2 + 2*wall
+    ]) cube([usb_hole_width, backwall_depth + z, usb_hole_height]);
 }
 
 // usb shelf
 translate([
     width + gap- usb_hole_width - screwhead_diameter - 2*wall -2*hole_spacing - trs_counterbore_dia,
-    depth + wall/2 - gap/2 - usb_shelf_depth,
+    backwall_offset + backwall_depth - usb_shelf_depth,
     0
-]) cube([usb_hole_width, usb_shelf_depth, 2*wall + (trs_counterbore_dia - usb_hole_height)/2 ]);
+]) cube([usb_hole_width, usb_shelf_depth, (trs_counterbore_dia - usb_hole_height)/2 + 2*wall ]);

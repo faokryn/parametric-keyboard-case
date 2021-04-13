@@ -20,7 +20,7 @@ wall = 2;               // thickness of the wall of the case
 x_tol = 0.2;            // tolerance between the plate & the case on the x-axis
 y_tol = 0.05;           // tolerance between the plate & the case on the y-axis
 
-xa = 5;                 // tilt angle over the x-axis
+xa = 8;                 // tilt angle over the x-axis
 ya = 0;                 // tilt angle over the y-axis
 
 screwshaft_diameter = 3;
@@ -34,7 +34,7 @@ trs_counterbore_depth = 2;
 
 usb_hole_width = 8;
 usb_hole_height = 4.5;
-usb_shelf_depth = 5;
+usb_shelf_depth = 10;
 
 hole_spacing = 5;
 
@@ -64,6 +64,9 @@ distance = [
 ];
 width = max([for(row = distance) row[len(row) - 1]]) * u + gap; // plate width
 depth = len(layout) * u + gap;                                  // plate depth
+
+backwall_depth = wall*cos(90 - xa) + (wall + gap/2)*cos(xa);    // depth of case's back wall
+backwall_offset = (depth + wall + y_tol - gap/2)*cos(xa) - wall*sin(xa); // offset of case's back wall
 
 // UTILITY MODULES
 

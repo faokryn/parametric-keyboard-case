@@ -64,7 +64,7 @@ difference() {
     // usb hole
     translate([
         width + gap - usb_hole_width - screwhead_diameter - 2*wall - 2*hole_spacing - trs_counterbore_dia,
-        backwall_offset,
+        backwall_offset - z/2,
         (trs_counterbore_dia - usb_hole_height)/2 + 2*wall
     ]) cube([usb_hole_width, backwall_depth + z, usb_hole_height]);
 }

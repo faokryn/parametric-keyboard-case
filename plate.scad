@@ -24,13 +24,13 @@ module plate() {
                         translate([3/4*gap, 3/4*gap, plate])
                             cube([u - gap/2, u - gap/2, reinforcement + z]);
                     else {
-                        translate([gap - 2*stab_width, gap - stab_offset, -z/2])
+                        translate([gap - 2*stab_width, gap + stab_offset, -z/2])
                             cube([stab_width, stab_height, plate + z]);
-                        translate([stab_width + u, gap - stab_offset, -z/2])
+                        translate([stab_width + u, gap + stab_offset, -z/2])
                             cube([stab_width, stab_height, plate + z]);
                         translate([
                             3/4*gap - 2*stab_width,
-                            3/4*gap - stab_offset,
+                            3/4*gap,
                             plate
                         ])
                             cube([
